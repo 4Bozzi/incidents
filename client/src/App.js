@@ -42,6 +42,7 @@ const App = (props) => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [showInfoWindow, setShowInfoWindow] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
   const mapStyles = { width: '100%', height: '100%' };
 
   useEffect(() => {
@@ -74,9 +75,25 @@ const App = (props) => {
     setShowModal(false);
   };
 
-  const onFileChange = () => {};
+  const onFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
 
-  const onFileUpload = () => {};
+  const onFileUpload = (event) => {
+    const formData = new FormData();
+    formData.append('newIncident', selectedFile, selectedFile.name);
+    // send off request to the backend to parse
+    // get back data and do add to the markers array
+    axios
+      .post('/upload', formData)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    // setMarkerData(markerData.concat())
+  };
 
   const addEvent = () => {
     setShowModal(true);

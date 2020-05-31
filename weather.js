@@ -15,5 +15,5 @@ module.exports = getHourlyWeather = async (incident) => {
       jsonData.weather = item;
     }
   });
-  return JSON.stringify(jsonData);
+  return jsonData;
 };

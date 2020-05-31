@@ -1,20 +1,24 @@
 const weather = require('./weather.js');
 const express = require('express');
-let jsonData1 = require('./incidents/F01705150050.json');
-let jsonData2 = require('./incidents/F01705150090.json');
+const formidable = require('express-formidable');
+var fs = require('fs');
 const app = express();
+app.use(formidable());
 
 const port = 3001;
 
-app.get('/', (req, res) => {
-  //   const enhancedData = weather(jsonData1);
-  //   console.log(`data: ${enhancedData}`);
-  //   res.send(enhancedData);
-});
-
-app.get('/start', (req, res) => {
-  const enhancedData = weather(req.body);
-  res.send(enhancedData);
+app.post('/upload', (req, res) => {
+  console.log(`req: ${JSON.stringify(req.files)}`);
+  //req.fields;
+  //req.files;
+  fs.readFile(req.files.newIncident.path, async function (err, data) {
+    if (err) {
+      throw err;
+    }
+    const enhancedData = await weather(JSON.parse(data));
+    console.log(`enhancedData: ${JSON.stringify(enhancedData)}`);
+    res.send(enhancedData);
+  });
 });
 
 app.listen(port, () =>
