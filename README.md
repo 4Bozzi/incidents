@@ -1,13 +1,15 @@
 ## Steps to install:
 
 1. Clone the repo and cd into root of project
-2. run the command: `npm i && cd client && npm i`
+2. Run the command: `npm i && cd client && npm i`
 
 ## Steps to use:
 
 1. From the root of the project run `npm start` this will open your browser to localhost:3000 with a map displaying
 2. In the top right corner you will need to click `Add new event`
 3. You will get a window to select a file, you will want to select and incident file formatted like the examples
+4. Click upload, a pin will appear on the map
+5. Click the pin to view the details (not all details are displayed as a design choice)
 
 ## Improvements with double the time:
 
