@@ -4,6 +4,9 @@
   "description": "Enrich 911 emergency incident data to provide better analytics for a fire department.",
   "main": "server.js",
   "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node server.js",
+    "client": "node startclient.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,5 +22,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "unirest": "^0.6.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0"
   }
 }
