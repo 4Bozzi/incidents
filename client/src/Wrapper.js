@@ -16,7 +16,6 @@ const Wrapper = () => {
     axios
       .post('/upload', formData)
       .then(function (response) {
-        console.log(response.data);
         setMapData(response.data);
         setShowModal(false);
       })

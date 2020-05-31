@@ -1,6 +1,5 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-import axios from 'axios';
 import { formatDate, formatTemperature } from './utils/dataUtils';
 import './App.css';
 
