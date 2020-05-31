@@ -7,12 +7,14 @@ const app = express();
 const port = 3001;
 
 app.get('/', (req, res) => {
-  weather('2019-05-02', '01:00');
-  res.send('Hello World!');
+  //   const enhancedData = weather(jsonData1);
+  //   console.log(`data: ${enhancedData}`);
+  //   res.send(enhancedData);
 });
 
 app.get('/start', (req, res) => {
-  res.send(JSON.stringify([jsonData1, jsonData2]));
+  const enhancedData = weather(req);
+  res.send(enhancedData);
 });
 
 app.listen(port, () =>

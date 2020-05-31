@@ -4,6 +4,39 @@ import axios from 'axios';
 import { formatDate, formatTemperature } from './utils/dataUtils';
 import './App.css';
 
+const createInfoWindow = (selectedPlace) => {
+  const { address, fire_department, description, weather } = selectedPlace.data;
+  return (
+    <Fragment>
+      <h1>
+        {selectedPlace.name}
+        <br />
+        {address && address.address_line1}
+        <br />
+        {address && `${address.city}, ${address.state}`}
+      </h1>
+      <h2>{fire_department && `Fire Department: ${fire_department.name}`}</h2>
+      <h3>
+        {description && `Opened: ${formatDate(description.event_opened)}`}
+      </h3>
+      <h3>
+        {description && `Closed: ${formatDate(description.event_closed)}`}
+      </h3>
+      <p>
+        {weather && `Temperature: ${formatTemperature(weather.temperature)}`}
+      </p>
+      <p>{weather && `Humidity: ${`${weather.humidity}%`}`}</p>
+      <p>{weather && `Precipitation: ${`${weather.precipitation}"`}`}</p>
+      {description.comments && (
+        <h3>
+          Comments: <br />
+          {description.comments}
+        </h3>
+      )}
+    </Fragment>
+  );
+};
+
 const App = (props) => {
   const [mapData, setMapData] = useState(null);
   const [selectedMarker, setSelectedMarker] = useState(null);
@@ -54,44 +87,7 @@ const App = (props) => {
           onClose={onInfoWindowClose}
         >
           <div style={{ textAlign: 'center' }}>
-            {selectedMarker && (
-              <Fragment>
-                <h1>
-                  {selectedMarker.name}
-                  <br />
-                  {selectedMarker.data.address.address_line1}
-                  <br />
-                  {`${selectedMarker.data.address.city}, ${selectedMarker.data.address.state}`}
-                </h1>
-                <h2>
-                  Fire Department: {selectedMarker.data.fire_department.name}
-                </h2>
-                <h3>
-                  Opened:{' '}
-                  {formatDate(selectedMarker.data.description.event_opened)}
-                </h3>
-                <h3>
-                  Closed:{' '}
-                  {formatDate(selectedMarker.data.description.event_closed)}
-                </h3>
-                <p>
-                  Temperature:{' '}
-                  {formatTemperature(selectedMarker.data.weather.temperature)}
-                </p>
-                <p>Humidity: {`${selectedMarker.data.weather.humidity}%`}</p>
-                <p>
-                  Precipitation:{' '}
-                  {`${selectedMarker.data.weather.precipitation}"`}
-                </p>
-                {selectedMarker.data.description &&
-                  selectedMarker.data.description.comments && (
-                    <h3>
-                      Comments: <br />
-                      {selectedMarker.data.description.comments}
-                    </h3>
-                  )}
-              </Fragment>
-            )}
+            {selectedMarker && createInfoWindow(selectedMarker)}
           </div>
         </InfoWindow>
       </Map>
