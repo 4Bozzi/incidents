@@ -6,6 +6,8 @@ import './App.css';
 
 const App = (props) => {
   const [mapData, setMapData] = useState(null);
+  const [selectedMarker, setSelectedMarker] = useState(null);
+  const [showInfoWindow, setShowInfoWindow] = useState(false);
   const mapStyles = { width: '100%', height: '100%' };
 
   useEffect(() => {
@@ -14,7 +16,10 @@ const App = (props) => {
     });
   }, []);
 
-  const onMarkerClick = () => {};
+  const onMarkerClick = (props, marker, e) => {
+    setSelectedMarker(marker);
+    setShowInfoWindow(true);
+  };
   const renderMarkers = (data) =>
     data.map((item, index) => (
       <Marker
@@ -25,6 +30,9 @@ const App = (props) => {
         data={data[index]}
       />
     ));
+  const onInfoWindowClose = () => {
+    setShowInfoWindow(false);
+  };
 
   return (
     <div className="App">
@@ -39,6 +47,14 @@ const App = (props) => {
         }}
       >
         {mapData && mapData.length && renderMarkers(mapData)}
+
+        <InfoWindow
+          marker={selectedMarker}
+          visible={showInfoWindow}
+          onClose={onInfoWindowClose}
+        >
+          <div>test</div>
+        </InfoWindow>
       </Map>
     </div>
   );
