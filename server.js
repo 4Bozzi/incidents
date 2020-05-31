@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/start', (req, res) => {
-  res.send([jsonData1, jsonData2]);
+  res.send(JSON.stringify([jsonData1, jsonData2]));
 });
 
 app.listen(port, () =>
