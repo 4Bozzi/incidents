@@ -92,7 +92,7 @@ const App = (props) => {
           </div>
         </div>
       )}
-      <h1 className="center">Test Incident</h1>
+      <h1 className="center">Incident Tracker</h1>
       <div className="right">
         <div>
           <button
