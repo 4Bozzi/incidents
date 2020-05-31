@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/4Bozzi/incidents/issues"
   },
-  "homepage": "https://github.com/4Bozzi/incidents#readme"
+  "homepage": "https://github.com/4Bozzi/incidents#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
