@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/start', (req, res) => {
-  const enhancedData = weather(req);
+  const enhancedData = weather(req.body);
   res.send(enhancedData);
 });
 

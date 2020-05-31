@@ -41,6 +41,7 @@ const App = (props) => {
   const [mapData, setMapData] = useState(null);
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [showInfoWindow, setShowInfoWindow] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const mapStyles = { width: '100%', height: '100%' };
 
   useEffect(() => {
@@ -53,6 +54,7 @@ const App = (props) => {
     setSelectedMarker(marker);
     setShowInfoWindow(true);
   };
+
   const renderMarkers = (data) =>
     data.map((item, index) => (
       <Marker
@@ -63,13 +65,48 @@ const App = (props) => {
         data={data[index]}
       />
     ));
+
   const onInfoWindowClose = () => {
     setShowInfoWindow(false);
   };
 
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const onFileChange = () => {};
+
+  const onFileUpload = () => {};
+
+  const addEvent = () => {
+    setShowModal(true);
+  };
+
   return (
     <div className="App">
-      <h1>Test Incident</h1>
+      {showModal && (
+        <div className="modal-background">
+          <div className="modal">
+            <div className="close-icon" onClick={closeModal}>
+              x
+            </div>
+            <label for="uploader">Pick a json file to upload</label>
+            <input id="uploader" type="file" onChange={onFileChange} />
+            <button onClick={onFileUpload}>Upload!</button>
+          </div>
+        </div>
+      )}
+      <h1 className="center">Test Incident</h1>
+      <div className="right">
+        <div>
+          <button
+            style={{ cursor: 'pointer', marginBottom: '5px' }}
+            onClick={addEvent}
+          >
+            Add new event
+          </button>
+        </div>
+      </div>
       <Map
         google={props.google}
         zoom={11}
@@ -80,7 +117,6 @@ const App = (props) => {
         }}
       >
         {mapData && mapData.length && renderMarkers(mapData)}
-
         <InfoWindow
           marker={selectedMarker}
           visible={showInfoWindow}

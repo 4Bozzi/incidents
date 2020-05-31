@@ -3,7 +3,7 @@ let jsonData = require('./incidents/F01705150050.json');
 
 //'https://api.meteostat.net/v1/stations/search?q=richmond&key=g1trqie6'
 
-module.exports = getHourlyWeather = async (req) => {
+module.exports = getHourlyWeather = async (incident) => {
   const date = new Date(incident.description.event_opened);
   const dateString = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
   const hoursString = `${date.getHours()}:00`;
