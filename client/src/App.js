@@ -38,65 +38,45 @@ const createInfoWindow = (selectedPlace) => {
 };
 
 const App = (props) => {
-  const [mapData, setMapData] = useState(null);
+  const { mapData, handleFileUpload, handleShowModal, showModal } = props;
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [showInfoWindow, setShowInfoWindow] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const mapStyles = { width: '100%', height: '100%' };
-
-  useEffect(() => {
-    axios.get('/start').then((response) => {
-      setMapData(response.data);
-    });
-  }, []);
 
   const onMarkerClick = (props, marker, e) => {
     setSelectedMarker(marker);
     setShowInfoWindow(true);
   };
 
-  const renderMarkers = (data) =>
-    data.map((item, index) => (
-      <Marker
-        title={item.address.common_place_name}
-        name={item.address.common_place_name}
-        onClick={onMarkerClick}
-        position={{ lat: item.address.latitude, lng: item.address.longitude }}
-        data={data[index]}
-      />
-    ));
+  const renderMarkers = (data) => (
+    <Marker
+      title={data.address.common_place_name}
+      name={data.address.common_place_name}
+      onClick={onMarkerClick}
+      position={{ lat: data.address.latitude, lng: data.address.longitude }}
+      data={data}
+    />
+  );
 
   const onInfoWindowClose = () => {
     setShowInfoWindow(false);
   };
 
   const closeModal = () => {
-    setShowModal(false);
+    handleShowModal(false);
   };
 
   const onFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
 
-  const onFileUpload = (event) => {
-    const formData = new FormData();
-    formData.append('newIncident', selectedFile, selectedFile.name);
-    // send off request to the backend to parse
-    // get back data and do add to the markers array
-    axios
-      .post('/upload', formData)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    // setMarkerData(markerData.concat())
+  const onFileUpload = () => {
+    handleFileUpload(selectedFile);
   };
 
   const addEvent = () => {
-    setShowModal(true);
+    handleShowModal(true);
   };
 
   return (
@@ -133,13 +113,13 @@ const App = (props) => {
           lng: -77.4602617,
         }}
       >
-        {mapData && mapData.length && renderMarkers(mapData)}
+        {mapData && renderMarkers(mapData)}
         <InfoWindow
           marker={selectedMarker}
           visible={showInfoWindow}
           onClose={onInfoWindowClose}
         >
-          <div style={{ textAlign: 'center' }}>
+          <div className="center">
             {selectedMarker && createInfoWindow(selectedMarker)}
           </div>
         </InfoWindow>

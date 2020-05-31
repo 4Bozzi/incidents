@@ -7,16 +7,16 @@ app.use(formidable());
 
 const port = 3001;
 
+app.post('/start', (req, res) => {
+  res.send({});
+});
+
 app.post('/upload', (req, res) => {
-  console.log(`req: ${JSON.stringify(req.files)}`);
-  //req.fields;
-  //req.files;
   fs.readFile(req.files.newIncident.path, async function (err, data) {
     if (err) {
       throw err;
     }
     const enhancedData = await weather(JSON.parse(data));
-    console.log(`enhancedData: ${JSON.stringify(enhancedData)}`);
     res.send(enhancedData);
   });
 });
